@@ -1,5 +1,5 @@
 # FDL GUESS GAME
-Il s'agit d'une application en temps réel (un jeu) ou vous devrez deviné l'intervalle dans lequel se trouve le chiffre aleatoire choisi par le system.
+This is a real-time application (a game) where you have to guess the interval in which the random number chosen by the system is.
 
 ## Tools
   Express.js
