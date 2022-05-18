@@ -20,46 +20,48 @@
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <h2 class="text-uppercase text-center mb-1">Choose the right answer</h2>
-                                <p class="text-info text-center"><a href="help.html">Help</a></p>
-                                <div class="container">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="ltfour">Less than 4</button>
+                                <h2 class="text-uppercase text-center mb-1" id="game_info">Choose the right answer</h2>
+                                <p class="text-info text-center"><a href="help.html" id="help">Help</a></p>
+                                <div id="game_container">
+                                    <div class="container">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="ltfour">Less than 4</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="etfour">Exactly 4</button>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="etfour">Exactly 4</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="d-flex justify-content-center">
-                                                <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="mtfour">More than 4</button>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="mtfour">More than 4</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <p class="text-center pt-5 mb-2" id="answer"></p>
+                                    <table class="table table-striped mt-5" id="points_table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>IA</td>
+                                                <td id="ia_points"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>FDL</td>
+                                                <td id="user_points"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <p class="text-center pt-5 mb-2" id="answer"></p>
-                                <table class="table table-striped mt-5">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Username</th>
-                                            <th scope="col">Points</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>IA</td>
-                                            <td>5</td>
-                                        </tr>
-                                        <tr>
-                                            <td>FDL</td>
-                                            <td>5</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>

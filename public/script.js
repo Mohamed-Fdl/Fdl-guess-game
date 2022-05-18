@@ -8,8 +8,9 @@ var mtf_button = document.getElementById('mtfour')
 
 const username = location.search.split('=')[1].toString()
 
-socket.emit('newRegistration', username);
+const user = { username: username, points: 5 }
 
+socket.emit('newRegistration', user);
 
 ltf_button.addEventListener('click', function(e) {
     socket.emit('GUESS', 'LTFOUR')
@@ -25,7 +26,15 @@ mtf_button.addEventListener('click', function(e) {
 
 socket.on('giveAnswer', function(result) {
     var answer = document.getElementById('answer')
+
+    var ia_points = document.getElementById('ia_points')
+
+    var user_points = document.getElementById('user_points')
+
+    user_points.innerHTML = result.points
+    ia_points.innerHTML = 10 - result.points
     answer.innerHTML = result.message
+
     if (result.answer) {
         answer.classList.remove('text-danger')
         answer.classList.add('text-success')
@@ -35,25 +44,34 @@ socket.on('giveAnswer', function(result) {
     }
 })
 
-/*socket.on('alertcomming', function(username) {
-    alert(`Welcome to you ${username}`)
-})*/
+socket.on('gameOver', function(result) {
+    var game_container = document.getElementById('game_container')
 
+    var help = document.getElementById('help')
 
+    var game_info = document.getElementById('game_info')
 
-/* if (random.interval === 'LTFOUR') {
-            alert('good guess')
-        } else {
-            alert('bad guess')
-        }*/
+    game_container.parentNode.removeChild(game_container);
+    help.innerHTML = 'Home'
+    help.setAttribute('href', 'index.html')
+    game_info.innerHTML = 'Game Over :=('
+    game_info.classList.add('text-danger')
+})
 
+socket.on('gameWon', function(result) {
+    var game_container = document.getElementById('game_container')
 
+    var help = document.getElementById('help')
 
+    var game_info = document.getElementById('game_info')
 
+    game_container.parentNode.removeChild(game_container);
+    help.innerHTML = 'Home'
+    help.setAttribute('href', 'index.html')
+    game_info.innerHTML = 'Congratulation you won the game :=)'
+    game_info.classList.add('text-success')
+})
 
-
-
-
-//MTFour more than four
-//ETFour equal to four
-//LTFour less than four
+//MTFOUR more than four
+//ETFOUR equal to four
+//LTFOUR less than four
