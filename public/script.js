@@ -6,7 +6,11 @@ var etf_button = document.getElementById('etfour')
 
 var mtf_button = document.getElementById('mtfour')
 
+var user_name = document.getElementById('user_name')
+
 const username = location.search.split('=')[1].toString()
+
+user_name.innerHTML = username
 
 const user = { username: username, points: 5 }
 
