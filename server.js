@@ -6,10 +6,19 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const _ = require('underscore')
 
+const users = []
+
 app.use(express.static('public'))
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    socket.on('newUser', function(user) {
+        user.id = socket.id
+        users.push(user)
+        io.emit('usersList', users)
+    })
+
 
     socket.on('newRegistration', (username) => {
         console.log('new gamer come ' + username.username);
@@ -42,7 +51,11 @@ io.on('connection', (socket) => {
         })
 
     });
+
+
     socket.on('disconnect', () => {
+        userLeave(socket.id)
+        io.emit('usersList', users)
         console.log('user disconnected');
     });
 
@@ -59,6 +72,14 @@ function randomNumber() {
         return { value: random_number, interval: 'MTFOUR' }
     } else {
         return { value: random_number, interval: 'ETFOUR' }
+    }
+}
+
+function userLeave(id) {
+    const index = users.findIndex(user => user.id === id)
+
+    if (index !== -1) {
+        return users.splice(index, 1)[0]
     }
 }
 

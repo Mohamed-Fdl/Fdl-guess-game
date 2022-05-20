@@ -19,33 +19,9 @@
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <h2 class="text-uppercase text-center mb-5">Choose your opponent</h2>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Username</th>
-                                            <th scope="col">Old</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>fdl</td>
-                                            <td>20</td>
-                                        </tr>
-                                        <tr>
-                                            <td>fdl</td>
-                                            <td>20</td>
-                                        </tr>
-                                        <tr>
-                                            <td>fdl</td>
-                                            <td>20</td>
-                                        </tr>
-                                        <tr>
-                                            <td>fdl</td>
-                                            <td>20</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <h2 class="text-uppercase text-center mb-5">Choose your opponent(s)</h2>
+                                <ul class="list-group" id="userslist">
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -55,7 +31,8 @@
     </section>
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="users.js"></script>
 </body>
 
 </html>
