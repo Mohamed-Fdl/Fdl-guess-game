@@ -50,6 +50,11 @@ io.on('connection', (socket) => {
             }
         })
 
+        socket.on('gggg', function() {
+            console.log('newgame session');
+        })
+
+
     });
 
 

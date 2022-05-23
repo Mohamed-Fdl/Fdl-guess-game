@@ -8,9 +8,15 @@ var mtf_button = document.getElementById('mtfour')
 
 var user_name = document.getElementById('user_name')
 
-const username = location.search.split('=')[1].toString()
+var opp_name = document.getElementById('opp_name')
+
+const username = location.search.split('&')[0].split('=')[1]
+
+const opponent = location.search.split('&')[1].split('=')[1]
 
 user_name.innerHTML = username
+
+opp_name.innerHTML = opponent
 
 const user = { username: username, points: 5 }
 

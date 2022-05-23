@@ -13,6 +13,7 @@ socket.on('usersList', function(users) {
     outputusers(users)
 })
 
+
 function formatusers(users, username) {
     const index = users.findIndex(user => user.username === username)
 
@@ -22,9 +23,5 @@ function formatusers(users, username) {
 }
 
 function outputusers(users) {
-    usersList.innerHTML = `${users.map(user => `<li class="list-group-item">${user.username}</li>`).join('')}`
+    usersList.innerHTML = `${users.map(user => `<li class="list-group-item"><a href="play.html?username=${username}&opponent=${user.username}"> ${user.username}</a></li>`).join('')}`
 }
-
-//MTFOUR more than four
-//ETFOUR equal to four
-//LTFOUR less than four
