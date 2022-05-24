@@ -10,15 +10,17 @@ var user_name = document.getElementById('user_name')
 
 var opp_name = document.getElementById('opp_name')
 
+var game_code = document.getElementById('game_code')
+
 const username = location.search.split('&')[0].split('=')[1]
 
-const opponent = location.search.split('&')[1].split('=')[1]
+const gamecode = location.search.split('&')[1].split('=')[1]
 
 user_name.innerHTML = username
 
-opp_name.innerHTML = opponent
+game_code.innerHTML = gamecode
 
-const user = { username: username, points: 5 }
+const user = { username: username, points: 5, game_code: gamecode }
 
 socket.emit('newRegistration', user);
 
@@ -81,6 +83,14 @@ socket.on('gameWon', function(result) {
     game_info.innerHTML = 'Congratulation you won the game :=)'
     game_info.classList.add('text-success')
 })
+
+socket.on('gameStart', function(users) {
+
+    console.log(users);
+
+
+})
+
 
 //MTFOUR more than four
 //ETFOUR equal to four

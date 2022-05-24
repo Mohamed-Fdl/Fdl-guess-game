@@ -1,0 +1,17 @@
+Hello dear network, I hope you are doing well!!
+The time is serious, it is also for questions, for research. I continued with my multiplayer game project using
+socket.io it has not been easy and I have made little progress compared to last week. I have made a major change.
+Here is what I had planned:
+**** the user fills in his username (1)
+**** he lands on a page with all other connected players (2)
+**** he chooses one of them to face each other (3)
+**** both land on the page where the game interface is (4)
+
+But I realized that the path was going to be very complicated, especially from step 3 to step 4.
+So here's what I plan to do now
+**** the user fills in his username and a special game code (1)
+**** he lands on the game page and confronts the user who would have entered the same special game code as him (2)
+
+So here is the new deal .I really hope to get through this project.See you next time
+
+

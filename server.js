@@ -13,56 +13,54 @@ app.use(express.static('public'))
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('newUser', function(user) {
+
+    socket.on('newRegistration', (user) => {
+
         user.id = socket.id
+
         users.push(user)
-        io.emit('usersList', users)
-    })
 
+        console.log('new gamer' + user.username);
 
-    socket.on('newRegistration', (username) => {
-        console.log('new gamer come ' + username.username);
+        const username = user.username
 
-        const user = username.username
+        socket.join(user.game_code)
 
-        socket.join(user)
+        //  const gamers = users.findAll(user => user.game_code === user.game_code)
+
+        io.to(user.game_code).emit('gameStart', users)
 
         socket.on('GUESS', function(interval) {
             var result = randomNumber()
             if (interval === result.interval) {
                 var message = 'Good answer!The number is ' + result.value
                 var answer = true
-                username.points++
+                user.points++
             } else {
                 var message = 'Bad answer!The number is ' + result.value
                 var answer = false
-                username.points--
+                user.points--
             }
             result.message = message
             result.answer = answer
-            result.points = username.points
-            if (username.points <= 0) {
+            result.points = user.points
+            if (user.points <= 0) {
                 io.to(user).emit('gameOver', result)
-            } else if (username.points === 10) {
-                io.to(user).emit('gameWon', result)
+            } else if (user.points === 10) {
+                io.to(username).emit('gameWon', result)
             } else {
-                io.to(user).emit('giveAnswer', result)
+                io.to(username).emit('giveAnswer', result)
             }
         })
 
-        socket.on('gggg', function() {
-            console.log('newgame session');
-        })
-
-
+        socket.on('disconnect', () => {
+            userLeave(socket.id)
+            io.to(user.game_code).emit('gameStart', users)
+            console.log('user disconnected');
+        });
     });
 
 
-    socket.on('disconnect', () => {
-        userLeave(socket.id)
-        io.emit('usersList', users)
-        console.log('user disconnected');
-    });
 
 
 });
@@ -87,6 +85,18 @@ function userLeave(id) {
         return users.splice(index, 1)[0]
     }
 }
+
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
+
 
 server.listen(3000, () => {
     console.log('listening on *:3000');
