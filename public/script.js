@@ -6,11 +6,29 @@ var etf_button = document.getElementById('etfour')
 
 var mtf_button = document.getElementById('mtfour')
 
+var one_button = document.getElementById('one')
+
+var two_button = document.getElementById('two')
+
 var user_name = document.getElementById('user_name')
+
+var user_name_number = document.getElementById('user_name_number')
 
 var opp_name = document.getElementById('opp_name')
 
+var opp_name_number = document.getElementById('opp_name_number')
+
 var game_code = document.getElementById('game_code')
+
+var opponent_name = document.getElementById('opponent_name')
+
+var oppCome = document.getElementById('oppCome')
+
+var choiceContainer = document.getElementById('choice-container')
+
+var numberContainer = document.getElementById('number-container')
+
+var pointTableNumber = document.getElementById('points_table_number')
 
 const username = location.search.split('&')[0].split('=')[1]
 
@@ -18,7 +36,8 @@ const gamecode = location.search.split('&')[1].split('=')[1]
 
 user_name.innerHTML = username
 
-game_code.innerHTML = gamecode
+user_name_number.innerHTML = username
+
 
 const user = { username: username, points: 5, game_code: gamecode }
 
@@ -34,6 +53,15 @@ etf_button.addEventListener('click', function(e) {
 
 mtf_button.addEventListener('click', function(e) {
     socket.emit('GUESS', 'MTFOUR')
+})
+
+one_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    socket.emit('PRESS', '1')
+})
+
+two_button.addEventListener('click', function() {
+    socket.emit('PRESS', '2')
 })
 
 socket.on('giveAnswer', function(result) {
@@ -54,6 +82,7 @@ socket.on('giveAnswer', function(result) {
         answer.classList.remove('text-success')
         answer.classList.add('text-danger')
     }
+    choiceContainer.classList.add('invisible')
 })
 
 socket.on('gameOver', function(result) {
@@ -86,10 +115,51 @@ socket.on('gameWon', function(result) {
 
 socket.on('gameStart', function(users) {
 
-    console.log(users);
+    // in step1 I escape user that have not the same gameCode of current user
+    const step1 = users.filter(function(user) {
+        return user.game_code === gamecode
+    })
 
+    //in step2 I escape the current user so I recover his opponent
+    const step2 = step1.filter(function(user) {
+        return user.username !== username
+    })
+
+    if (step2[0]) {
+        oppCome.classList.remove('invisible')
+        opponent_name.innerHTML = step2[0].username;
+        opp_name_number.innerHTML = step2[0].username;
+        opp_name.innerHTML = step2[0].username;
+        var come_second = document.getElementById('come_second')
+        if (come_second) {
+            var come_first = document.getElementById('come_first')
+            come_first.parentNode.removeChild(come_first)
+            choiceContainer.classList.add('invisible')
+        }
+    } else {
+        var come_second = document.getElementById('come_second')
+        come_second.parentNode.removeChild(come_second)
+    }
 
 })
+
+socket.on('quitGame', function() {
+    location.href = "/?m=no-auth"
+})
+
+socket.on('needAnswer', function(number) {
+    console.log('give answer' + number)
+    choiceContainer.classList.remove('invisible')
+})
+
+socket.on('sendNotif', function(result) {
+    var answerNumber = document.getElementById('answer-number')
+    answerNumber
+    console.log(result)
+})
+
+
+
 
 
 //MTFOUR more than four

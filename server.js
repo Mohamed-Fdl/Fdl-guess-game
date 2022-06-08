@@ -8,6 +8,8 @@ const _ = require('underscore')
 
 const users = []
 
+let choice = ''
+
 app.use(express.static('public'))
 
 io.on('connection', (socket) => {
@@ -16,22 +18,33 @@ io.on('connection', (socket) => {
 
     socket.on('newRegistration', (user) => {
 
+
         user.id = socket.id
 
         users.push(user)
 
-        console.log('new gamer' + user.username);
+        socket.join(socket.id)
 
-        const username = user.username
+        if (verifyGameCode(user)) {
+            console.log('new gamer' + user.username);
 
-        socket.join(user.game_code)
+            const username = user.username
 
-        //  const gamers = users.findAll(user => user.game_code === user.game_code)
+            socket.join(user.game_code)
 
-        io.to(user.game_code).emit('gameStart', users)
+            io.to(user.game_code).emit('gameStart', users)
+        } else {
+            userLeave(user.id)
+
+            console.log('trop')
+
+            io.to(user.id).emit('quitGame')
+        }
+
 
         socket.on('GUESS', function(interval) {
-            var result = randomNumber()
+            var result = giveInterval(choice)
+
             if (interval === result.interval) {
                 var message = 'Good answer!The number is ' + result.value
                 var answer = true
@@ -44,13 +57,22 @@ io.on('connection', (socket) => {
             result.message = message
             result.answer = answer
             result.points = user.points
+            console.log('tout comme prevu');
+            io.to(user.id).emit('giveAnswer', result)
+            socket.broadcast.to(user.game_code).emit('sendNotif', result);
+            /*
             if (user.points <= 0) {
                 io.to(user).emit('gameOver', result)
             } else if (user.points === 10) {
                 io.to(username).emit('gameWon', result)
             } else {
                 io.to(username).emit('giveAnswer', result)
-            }
+            }*/
+        })
+
+        socket.on('PRESS', function(number) {
+            choice = number
+            socket.broadcast.to(user.game_code).emit('needAnswer', number);
         })
 
         socket.on('disconnect', () => {
@@ -66,9 +88,7 @@ io.on('connection', (socket) => {
 });
 
 
-function randomNumber() {
-    const options = [1, 2, 3, 4, 5, 6, 7]
-    const random_number = _.sample(options)
+function giveInterval(random_number) {
     if (random_number < 4) {
         return { value: random_number, interval: 'LTFOUR' }
     } else if (random_number > 4) {
@@ -84,6 +104,18 @@ function userLeave(id) {
     if (index !== -1) {
         return users.splice(index, 1)[0]
     }
+}
+
+function verifyGameCode(uSer) {
+    const gamersNumber = users.filter(function(user) {
+        return user.game_code === uSer.game_code
+    }).length
+
+    if (gamersNumber > 2) {
+        return false
+            /**/
+    }
+    return true
 }
 
 function makeid(length) {

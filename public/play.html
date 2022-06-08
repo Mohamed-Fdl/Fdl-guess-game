@@ -19,37 +19,99 @@
 <body>
     <section class="vh-100 bg-image">
         <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
+            <div class="container h-100" id="global">
                 <div class="row d-flex justify-content-center align-items-center h-100">
-
+                    <p class="text-center invisible" id="oppCome"> You play with :
+                        <span id="opponent_name"></span></p>
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                        <div class="card" style="border-radius: 15px;">
+                        <div class="card" style="border-radius: 15px;" id="come_first">
                             <div class="card-body p-5">
-                                <p class="text-center" id="game_code"></p>
+                                <h2 class="text-uppercase text-center mb-1" id="game_info">Choose number between 1 and 7</h2>
+                                <p class="text-info text-center"><a href="help.html" id="help">Help</a></p>
+                                <div id="game_container">
+                                    <div class="container">
+                                        <div class="row align-items-center" id="number-container">
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="one">1</button>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="two">2</button>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="three">3</button>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="four">4</button>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="five">5</button>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="six">6</button>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="seven">7</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center pt-5 mb-2" id="answer-number"></p>
+                                    <table class="table table-striped mt-5" id="points_table_number">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" id="user_name_number"></th>
+                                                <th scope="col" id="opp_name_number"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="user_points">5</td>
+                                                <td id="ia_points">5</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card" style="border-radius: 15px;" id="come_second">
+                            <div class="card-body p-5">
                                 <h2 class="text-uppercase text-center mb-1" id="game_info">Choose the right answer</h2>
                                 <p class="text-info text-center"><a href="help.html" id="help">Help</a></p>
                                 <div id="game_container">
                                     <div class="container">
-                                        <div class="row align-items-center">
+                                        <div class="row align-items-center" id="choice-container">
                                             <div class="col">
                                                 <div class="d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="ltfour">Less than 4</button>
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="ltfour">Less than four</button>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="etfour">Exactly 4</button>
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body " id="etfour">Exactly four</button>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="mtfour">More than 4</button>
+                                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body " id="mtfour">More than four</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <p class="text-center pt-5 mb-2" id="answer"></p>
-                                    <table class="table table-striped mt-5 invisible" id="points_table">
+                                    <table class="table table-striped mt-5" id="points_table">
                                         <thead>
                                             <tr>
                                                 <th scope="col" id="user_name"></th>
