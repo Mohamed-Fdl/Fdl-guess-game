@@ -10,6 +10,16 @@ var one_button = document.getElementById('one')
 
 var two_button = document.getElementById('two')
 
+var three_button = document.getElementById('three')
+
+var four_button = document.getElementById('four')
+
+var five_button = document.getElementById('five')
+
+var six_button = document.getElementById('six')
+
+var seven_button = document.getElementById('seven')
+
 var user_name = document.getElementById('user_name')
 
 var user_name_number = document.getElementById('user_name_number')
@@ -27,6 +37,8 @@ var oppCome = document.getElementById('oppCome')
 var choiceContainer = document.getElementById('choice-container')
 
 var numberContainer = document.getElementById('number-container')
+
+var answerNumber = document.getElementById('answer-number')
 
 var pointTableNumber = document.getElementById('points_table_number')
 
@@ -57,11 +69,44 @@ mtf_button.addEventListener('click', function(e) {
 
 one_button.addEventListener('click', function() {
     numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
     socket.emit('PRESS', '1')
 })
 
 two_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
     socket.emit('PRESS', '2')
+})
+
+three_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
+    socket.emit('PRESS', '3')
+})
+
+four_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
+    socket.emit('PRESS', '4')
+})
+
+five_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
+    socket.emit('PRESS', '5')
+})
+
+six_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
+    socket.emit('PRESS', '6')
+})
+
+seven_button.addEventListener('click', function() {
+    numberContainer.classList.add('invisible')
+    answerNumber.classList.add('invisible')
+    socket.emit('PRESS', '7')
 })
 
 socket.on('giveAnswer', function(result) {
@@ -95,22 +140,32 @@ socket.on('gameOver', function(result) {
     game_container.parentNode.removeChild(game_container);
     help.innerHTML = 'Home'
     help.setAttribute('href', 'index.html')
-    game_info.innerHTML = 'Game Over :=('
-    game_info.classList.add('text-danger')
+    if (result.points === 0) {
+        game_info.innerHTML = 'Game Over :=('
+        game_info.classList.add('text-danger')
+    } else {
+        game_info.innerHTML = 'Congrats you win this game :=)'
+        game_info.classList.add('text-success')
+    }
 })
 
-socket.on('gameWon', function(result) {
-    var game_container = document.getElementById('game_container')
+socket.on('gameOverNotif', function(result) {
+    var game_container_number = document.getElementById('game_container_number')
 
-    var help = document.getElementById('help')
+    var help_number = document.getElementById('help_number')
 
-    var game_info = document.getElementById('game_info')
+    var game_info_number = document.getElementById('game_info_number')
 
-    game_container.parentNode.removeChild(game_container);
-    help.innerHTML = 'Home'
-    help.setAttribute('href', 'index.html')
-    game_info.innerHTML = 'Congratulation you won the game :=)'
-    game_info.classList.add('text-success')
+    game_container_number.parentNode.removeChild(game_container_number);
+    help_number.innerHTML = 'Home'
+    help_number.setAttribute('href', 'index.html')
+    if (result.points === 0) {
+        game_info_number.innerHTML = 'Congrats you win this game :=)'
+        game_info_number.classList.add('text-success')
+    } else {
+        game_info_number.innerHTML = 'Game Over :=('
+        game_info_number.classList.add('text-danger')
+    }
 })
 
 socket.on('gameStart', function(users) {
@@ -148,15 +203,33 @@ socket.on('quitGame', function() {
 })
 
 socket.on('needAnswer', function(number) {
-    console.log('give answer' + number)
     choiceContainer.classList.remove('invisible')
 })
 
 socket.on('sendNotif', function(result) {
-    var answerNumber = document.getElementById('answer-number')
-    answerNumber
-    console.log(result)
+    var user_points_number = document.getElementById('user_points_number')
+
+    var ia_points_number = document.getElementById('ia_points_number')
+
+    ia_points_number.innerHTML = result.points
+
+    user_points_number.innerHTML = 10 - result.points
+
+    numberContainer.classList.remove('invisible')
+    answerNumber.classList.remove('invisible')
+    if (result.answer) {
+        answerNumber.innerHTML = 'You lost.Your opponent guessed correctly'
+        answerNumber.classList.add('text-danger')
+        answerNumber.classList.remove('text-success')
+    } else {
+        answerNumber.innerHTML = 'You won.Your opponent guessed wrong'
+        answerNumber.classList.remove('text-danger')
+        answerNumber.classList.add('text-success')
+    }
 })
+
+
+
 
 
 

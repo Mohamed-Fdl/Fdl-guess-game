@@ -57,17 +57,13 @@ io.on('connection', (socket) => {
             result.message = message
             result.answer = answer
             result.points = user.points
-            console.log('tout comme prevu');
+            if (user.points === 10 || user.points === 0) {
+                console.log('game finished');
+                io.to(user.id).emit('gameOver', result)
+                socket.broadcast.to(user.game_code).emit('gameOverNotif', result);
+            }
             io.to(user.id).emit('giveAnswer', result)
             socket.broadcast.to(user.game_code).emit('sendNotif', result);
-            /*
-            if (user.points <= 0) {
-                io.to(user).emit('gameOver', result)
-            } else if (user.points === 10) {
-                io.to(username).emit('gameWon', result)
-            } else {
-                io.to(username).emit('giveAnswer', result)
-            }*/
         })
 
         socket.on('PRESS', function(number) {
